@@ -165,7 +165,9 @@ struct KimiRatioPoolTests {
         {"usage":{"limit":"100","used":"19","resetTime":"2026-09-19T16:45:59Z"},
          "usages":{"limit_7d":{"used_ratio":\(ratio),"reset_time":"2026-09-19T16:45:59Z"}}}
         """)
-        #expect(usage.primary?.usedPercent == Double(ratio)! * 100)
+        let expected = try #require(Double(ratio)) * 100
+        let actual = try #require(usage.primary?.usedPercent)
+        #expect(abs(actual - expected) < 0.00001)
     }
 
     @Test
